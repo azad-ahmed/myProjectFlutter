@@ -25,7 +25,8 @@
 Um das Projekt zu starten, folgen Sie diesen Schritten:
 
 1. Klone das Repository:
-
+- https://github.com/azad-ahmed/myProjectFlutter.git
+- 
 2. Installiere die Abhängigkeiten:
 
 3. Starte die App in einem Emulator oder auf einem realen Gerät:
