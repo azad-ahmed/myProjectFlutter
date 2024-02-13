@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../models/blog_post.dart';
 import '../services/local_storage_service.dart';
 
 class BlogEditPage extends StatefulWidget {
-  final BlogPost blogPost;
+  final BlogPost? blogPost;
 
-  BlogEditPage({required this.blogPost});
+  const BlogEditPage({Key? key, this.blogPost}) : super(key: key);
 
   @override
   _BlogEditPageState createState() => _BlogEditPageState();
@@ -14,35 +13,43 @@ class BlogEditPage extends StatefulWidget {
 
 class _BlogEditPageState extends State<BlogEditPage> {
   final _formKey = GlobalKey<FormState>();
-  late String _title;
-  late String _content;
-  late String _author;
+  late TextEditingController _titleController;
+  late TextEditingController _contentController;
+  late TextEditingController _authorController;
+
   @override
   void initState() {
     super.initState();
-    _title = widget.blogPost.title;
-    _content = widget.blogPost.content;
-    _author = widget.blogPost.author;
+    _titleController = TextEditingController(text: widget.blogPost?.title ?? '');
+    _contentController = TextEditingController(text: widget.blogPost?.content ?? '');
+    _authorController = TextEditingController(text: widget.blogPost?.author ?? '');
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+    _authorController.dispose();
+    super.dispose();
   }
 
   void _saveBlogPost() {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
       final blogPost = BlogPost(
-        id: widget.blogPost.id.isEmpty ? DateTime.now().toString() : widget.blogPost.id,
-        title: _title,
-        content: _content,
-        author: _author,
-        createdAt: widget.blogPost.createdAt,
+        id: widget.blogPost?.id ?? DateTime.now().toString(),
+        title: _titleController.text,
+        content: _contentController.text,
+        author: _authorController.text,
+        createdAt: widget.blogPost?.createdAt ?? DateTime.now(),
       );
 
-      if (widget.blogPost.id.isEmpty) {
+      if (widget.blogPost == null) {
         LocalStorageService().addBlogPost(blogPost);
       } else {
-        LocalStorageService().updateBlogPost(blogPost.id, blogPost);
+        LocalStorageService().updateBlogPost(blogPost);
       }
 
-      Navigator.of(context).pop();
+      Navigator.pop(context, true);
     }
   }
 
@@ -50,7 +57,7 @@ class _BlogEditPageState extends State<BlogEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.blogPost.id.isEmpty ? 'Neuen Blogpost erstellen' : 'Blogpost bearbeiten'),
+        title: Text(widget.blogPost == null ? 'Neuen Blogpost erstellen' : 'Blogpost bearbeiten'),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -59,21 +66,18 @@ class _BlogEditPageState extends State<BlogEditPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                initialValue: _title,
+                controller: _titleController,
                 decoration: InputDecoration(labelText: 'Titel'),
-                onSaved: (value) => _title = value!,
                 validator: (value) => value!.isEmpty ? 'Bitte einen Titel eingeben' : null,
               ),
               TextFormField(
-                initialValue: _content,
+                controller: _contentController,
                 decoration: InputDecoration(labelText: 'Inhalt'),
-                onSaved: (value) => _content = value!,
                 validator: (value) => value!.isEmpty ? 'Bitte Inhalt eingeben' : null,
               ),
               TextFormField(
-                initialValue: _author,
+                controller: _authorController,
                 decoration: InputDecoration(labelText: 'Autor'),
-                onSaved: (value) => _author = value!,
                 validator: (value) => value!.isEmpty ? 'Bitte einen Autor eingeben' : null,
               ),
               ElevatedButton(

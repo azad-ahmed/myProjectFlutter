@@ -25,23 +25,18 @@ class _BlogListPageState extends State<BlogListPage> {
             title: Text(blogPost.title),
             subtitle: Text('Verfasst von ${blogPost.author}'),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BlogEditPage(blogPost: blogPost))),
+              builder: (context) => BlogEditPage(blogPost: blogPost),
+            )).then((_) => setState(() {})),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => BlogEditPage(blogPost: BlogPost(id: '', title: '', content: '', author: '', createdAt: DateTime.now()))),
-          );
-          setState(() {
-            // Diese Zeile zwingt die BlogListPage, sich neu aufzubauen und die aktualisierte Liste der Blogposts zu laden.
-          });
-        },
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BlogEditPage(blogPost: null),
+        )).then((_) => setState(() {})),
         child: Icon(Icons.add),
         tooltip: 'Neuen Blog-Beitrag erstellen',
       ),
-
     );
   }
 }
