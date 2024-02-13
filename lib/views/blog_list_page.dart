@@ -11,6 +11,12 @@ class BlogListPage extends StatefulWidget {
 class _BlogListPageState extends State<BlogListPage> {
   final LocalStorageService _storageService = LocalStorageService();
 
+  void _deleteBlogPost(String id) {
+    setState(() {
+      _storageService.deleteBlogPost(id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +27,31 @@ class _BlogListPageState extends State<BlogListPage> {
         itemCount: _storageService.blogPosts.length,
         itemBuilder: (context, index) {
           final blogPost = _storageService.blogPosts[index];
-          return ListTile(
-            title: Text(blogPost.title),
-            subtitle: Text('Verfasst von ${blogPost.author}'),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => BlogEditPage(blogPost: blogPost),
-            )).then((_) => setState(() {})),
+          return Dismissible(
+            key: Key(blogPost.id),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              _deleteBlogPost(blogPost.id);
+            },
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: Icon(Icons.delete, color: Colors.white),
+              ),
+            ),
+            child: ListTile(
+              title: Text(blogPost.title),
+              subtitle: Text('Verfasst von ${blogPost.author}'),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => _deleteBlogPost(blogPost.id),
+              ),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => BlogEditPage(blogPost: blogPost),
+              )).then((_) => setState(() {})),
+            ),
           );
         },
       ),
