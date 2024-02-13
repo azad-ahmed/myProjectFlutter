@@ -1,20 +1,16 @@
 class BlogPost {
-  final String id;
-  final String title;
-  final String content;
-  final String author;
-  final DateTime time;
-  int likes;
-  List<String> comments;
+  String id;
+  String title;
+  String content;
+  String author;
+  DateTime createdAt;
 
   BlogPost({
     required this.id,
     required this.title,
     required this.content,
     required this.author,
-    required this.time,
-    this.likes = 0,
-    this.comments = const [],
+    required this.createdAt,
   });
 
   factory BlogPost.fromJson(Map<String, dynamic> json) {
@@ -23,9 +19,7 @@ class BlogPost {
       title: json['title'],
       content: json['content'],
       author: json['author'],
-      time: DateTime.parse(json['time']),
-      likes: json['likes'] ?? 0,
-      comments: List<String>.from(json['comments'] ?? []),
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
@@ -35,17 +29,7 @@ class BlogPost {
       'title': title,
       'content': content,
       'author': author,
-      'time': time.toIso8601String(),
-      'likes': likes,
-      'comments': comments,
+      'createdAt': createdAt.toIso8601String(),
     };
-  }
-
-  void likePost() {
-    likes++;
-  }
-
-  void addComment(String comment) {
-    comments.add(comment);
   }
 }
