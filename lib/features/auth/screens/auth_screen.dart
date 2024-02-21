@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_project_flutter/constants/global_variables.dart';
 
+import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfield.dart';
 
 
@@ -22,14 +23,14 @@ class _AuthScreenState extends State<AuthScreen> {
   final _signInFormKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _namelController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordlController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
-    _namelController.dispose();
+    _nameController.dispose();
     _passwordlController.dispose();
   }
 
@@ -42,6 +43,7 @@ class _AuthScreenState extends State<AuthScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Welcome',
@@ -51,6 +53,9 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               ),
               ListTile(
+                tileColor: _auth == Auth.signup
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundColor,
                 title: const Text(
                   'Create Account',
                   style: TextStyle(
@@ -76,17 +81,22 @@ class _AuthScreenState extends State<AuthScreen> {
                     key: _signUpFormKey,
                     child: Column(
                       children: [
-                        CustomTextField(controller: _namelController,
+                        CustomTextField(controller: _nameController,
                         hintText: 'Name',
                         ),
                         const SizedBox(height: 15),
                         CustomTextField(controller: _emailController,
                           hintText: 'E-Mail',
                         ),
-                        const SizedBox(height: 15),                      CustomTextField(controller: _passwordlController,
+                        const SizedBox(height: 15),                      
+                        CustomTextField(controller: _passwordlController,
                           hintText: 'Passwort',
                         ),
                         const SizedBox(height: 15),
+                        CustomButton(
+                            text: 'Sign Up',
+                            onTap: () {}
+                        )
                       ],
                     ),
                   ),
@@ -108,7 +118,31 @@ class _AuthScreenState extends State<AuthScreen> {
                     });
                   },
                 ),
-              )
+              ),
+              if(_auth == Auth.signin)
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  color: GlobalVariables.backgroundColor,
+                  child: Form(
+                    key: _signUpFormKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(controller: _emailController,
+                          hintText: 'E-Mail',
+                        ),
+                        const SizedBox(height: 15),
+                        CustomTextField(controller: _passwordlController,
+                          hintText: 'Passwort',
+                        ),
+                        const SizedBox(height: 15),
+                        CustomButton(
+                            text: 'Sign In',
+                            onTap: () {}
+                        )
+                      ],
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
