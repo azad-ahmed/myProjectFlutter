@@ -4,7 +4,7 @@ class BlogPost {
   String content;
   String author;
   DateTime createdAt;
-  int likes; // Hinzugefügte Eigenschaft für Likes
+  int likes;
 
   BlogPost({
     required this.id,
@@ -12,10 +12,10 @@ class BlogPost {
     required this.content,
     required this.author,
     required this.createdAt,
-    this.likes = 0, // Initialwert für Likes
+    this.likes = 0,
   });
 
-  // Methode zum Erhöhen der Likes
+
   void like() {
     likes++;
   }

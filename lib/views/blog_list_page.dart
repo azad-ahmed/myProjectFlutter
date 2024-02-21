@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/blog_post.dart';
 import '../services/local_storage_service.dart';
 import 'blog_edit_page.dart';
 

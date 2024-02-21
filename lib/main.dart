@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_project_flutter/views/blog_list_page.dart';
+import 'package:my_project_flutter/theme/pallete.dart';
+
+
 
 
 void main() {
@@ -7,14 +9,15 @@ void main() {
 }
 
 class MyBlogApp extends StatelessWidget {
+  const MyBlogApp({super.key})
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mein Blog',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlogListPage(),
+      title: 'Blog',
+      theme: Pallete.darkModeAppTheme,
+      home: const SizedBox(),
     );
   }
 }

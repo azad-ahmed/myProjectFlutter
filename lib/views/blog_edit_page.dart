@@ -73,6 +73,8 @@ class _BlogEditPageState extends State<BlogEditPage> {
               TextFormField(
                 controller: _contentController,
                 decoration: InputDecoration(labelText: 'Inhalt'),
+                maxLines: null, // Erlaubt unbegrenzte Zeilen
+                keyboardType: TextInputType.multiline, // Zeigt die "Enter"-Taste auf der Tastatur für Zeilenumbrüche
                 validator: (value) => value!.isEmpty ? 'Bitte Inhalt eingeben' : null,
               ),
               TextFormField(
