@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_project_flutter/constants/global_variables.dart';
 
+import '../../../common/widgets/custom_textfield.dart';
+
 
 enum Auth{
   signin,
@@ -16,6 +18,22 @@ class AuthScreen extends StatefulWidget {
 }
 class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
+  final _signUpFormKey = GlobalKey<FormState>();
+  final _signInFormKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _namelController = TextEditingController();
+  final TextEditingController _passwordlController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _namelController.dispose();
+    _passwordlController.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +68,29 @@ class _AuthScreenState extends State<AuthScreen> {
                   },
                 ),
               ),
+              if(_auth == Auth.signup)
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  color: GlobalVariables.backgroundColor,
+                  child: Form(
+                    key: _signUpFormKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(controller: _namelController,
+                        hintText: 'Name',
+                        ),
+                        const SizedBox(height: 15),
+                        CustomTextField(controller: _emailController,
+                          hintText: 'E-Mail',
+                        ),
+                        const SizedBox(height: 15),                      CustomTextField(controller: _passwordlController,
+                          hintText: 'Passwort',
+                        ),
+                        const SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                ),
               ListTile(
                 title: const Text(
                   'Sign-In',
