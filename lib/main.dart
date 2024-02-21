@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_project_flutter/theme/pallete.dart';
-import 'features/auth/screens/login_screen.dart';
+import 'package:my_project_flutter/constants/global_variables.dart';
+
 
 
 
@@ -18,8 +18,25 @@ class MyBlogApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Blog',
-      theme: Pallete.darkModeAppTheme,
-      home: const LoginScreen(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black)
+        )
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+              'Blog Post'
+          ),
+        ),
+        body: const Center(
+            child: Text(
+                'Blog Post'
+            )
+        ),
+      ),
     );
   }
 }
