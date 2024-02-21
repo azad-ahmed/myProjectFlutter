@@ -57,7 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ? GlobalVariables.backgroundColor
                     : GlobalVariables.greyBackgroundColor,
                 title: const Text(
-                  'Create Account',
+                  'Sign up',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -102,8 +102,11 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ListTile(
+                tileColor: _auth == Auth.signin
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundColor,
                 title: const Text(
-                  'Sign-In',
+                  'Sign in',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
