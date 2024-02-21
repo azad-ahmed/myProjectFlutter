@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project_flutter/theme/pallete.dart';
+import 'features/auth/screens/login_screen.dart';
 
 
 
@@ -15,9 +16,10 @@ class MyBlogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Blog',
       theme: Pallete.darkModeAppTheme,
-      home: const SizedBox(),
+      home: const LoginScreen(),
     );
   }
 }
