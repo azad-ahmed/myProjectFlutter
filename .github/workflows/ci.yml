@@ -5,6 +5,7 @@ on:
       - master
       - main
 
+
 jobs:
   flutter_test:
     name: Run flutter test and analyze
