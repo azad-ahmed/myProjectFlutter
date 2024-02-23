@@ -22,7 +22,7 @@ jobs:
       - run: flutter test
 
   build_ios:
-    name: Build Flutter (Android)
+    name: Build Flutter (iOS)
     needs: [flutter_build]
     runs-on: macos-latest
     steps:
