@@ -3,7 +3,12 @@ on:
   pull_request:
     branches:
       - main
-
+      - master
+  push:
+    branches:
+      - main
+      - master
+      - develop
 
 jobs:
   flutter_build:
