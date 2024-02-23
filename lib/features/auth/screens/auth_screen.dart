@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project_flutter/constants/global_variables.dart';
-
+import 'package:my_project_flutter/features/auth/services/auth_service.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfield.dart';
 
@@ -21,10 +21,11 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-
+  final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordlController = TextEditingController();
+
 
   @override
   void dispose() {
@@ -32,6 +33,23 @@ class _AuthScreenState extends State<AuthScreen> {
     _emailController.dispose();
     _nameController.dispose();
     _passwordlController.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordlController.text,
+        name: _nameController.text,
+    );
+  }
+
+  void signInUser() {
+    authService.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordlController.text,
+    );
   }
 
 
@@ -95,7 +113,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: 15),
                         CustomButton(
                             text: 'Sign Up',
-                            onTap: () {}
+                            onTap: () {
+                              if(_signUpFormKey.currentState!.validate()) {
+                                signUpUser();
+                              }
+                            }
                         )
                       ],
                     ),
@@ -127,7 +149,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8),
                   color: GlobalVariables.backgroundColor,
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _signInFormKey,
                     child: Column(
                       children: [
                         CustomTextField(controller: _emailController,
@@ -140,7 +162,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: 15),
                         CustomButton(
                             text: 'Sign In',
-                            onTap: () {}
+                            onTap: () {
+                              if(_signInFormKey.currentState!.validate()) {
+                                signInUser();
+                              }
+                            }
                         )
                       ],
                     ),

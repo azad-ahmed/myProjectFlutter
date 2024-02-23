@@ -15,7 +15,6 @@ class BlogPost {
     this.likes = 0,
   });
 
-
   void like() {
     likes++;
   }
