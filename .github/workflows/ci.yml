@@ -1,14 +1,19 @@
-name: CI
+name: Build & Release
 on:
   pull_request:
     branches:
-      - master
       - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+      - develop
 
 
 jobs:
   flutter_test:
-    name: Run flutter test and analyze
+    name: Build & Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,6 +26,12 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+      - run: flutter build apk --release --split-per-abi
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
 
   build_ios:
     name: Build Flutter (iOS)
@@ -37,6 +48,9 @@ jobs:
       - run: flutter pub get
       - run: flutter clean
       - run: flutter build ios --release --no-codesign
+        with:
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
 
   build_appbundle:
     name: Build Flutter (Android)
@@ -53,3 +67,6 @@ jobs:
       - run: flutter pub get
       - run: flutter clean
       - run: flutter build appbundle
+        with:
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
