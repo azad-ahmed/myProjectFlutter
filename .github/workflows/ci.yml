@@ -26,12 +26,7 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
-      - run: flutter build apk --release --split-per-abi
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
-        with:
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+
 
   build_ios:
     name: Build Flutter (iOS)
@@ -47,10 +42,8 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter clean
-      - run: flutter build ios --release --no-codesign
-        with:
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+      - run: flutter build ios
+
 
   build_appbundle:
     name: Build Flutter (Android)
@@ -67,6 +60,3 @@ jobs:
       - run: flutter pub get
       - run: flutter clean
       - run: flutter build appbundle
-        with:
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
